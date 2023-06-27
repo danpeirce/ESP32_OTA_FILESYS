@@ -32,44 +32,48 @@ const char* host = "ESP32OTA";
 #include <ESPmDNS.h>
 #include <Update.h>
 #include <WiFiServer.h>
+#include <WiFiManager.h> // https://github.com/tzapu/WiFiManager 
 #include "filecode.h"
 #include "webpages.h"
 //#include <HTTPUpdateServer.h>
 
-#define MYWIFI  // allow credentials to be stored in a file
-#ifdef MYWIFI
-  #include "mywifi.h"
-#else
-  const char* ssid = "MYSSID";
-  const char* password = "MYPASSWD";
-#endif
-
 WebServer server(80);
 bool fsFound = false;
-
-#include "webpages.h"
-#include "filecode.h"
 
 void setup(void) 
 {
   Serial.begin(115200);
   delay(3000);
 
+  //WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
+  WiFiManager wm;
+
+  // reset settings - wipe stored credentials for testing
+  // these are stored by the esp library
+  // wm.resetSettings();
+
+  // Automatically connect using saved credentials,
+  // if connection fails, it starts an access point with the specified name ( "AutoConnectAP"),
+  // if empty will auto generate SSID, if password is blank it will be anonymous AP (wm.autoConnect())
+  // then goes into a blocking loop awaiting configuration and will return success result
+
+  bool res;
+  // res = wm.autoConnect(); // auto generated AP name from chipid
+  res = wm.autoConnect("ESP32-FS-AP"); // anonymous ap
+  //res = wm.autoConnect("ESP-AP","password"); // password protected ap
+
+  if(!res) {
+    Serial.println("Failed to connect");
+    // ESP.restart();
+  } 
+  else {
+    //if you get here you have connected to the WiFi    
+    Serial.println("");
+  }
+
   fsFound = initFS(false, false); // is an FS already in place?
 
-  // Connect to WiFi network
-  WiFi.begin(ssid, password);
-  Serial.println("WiFi starting");
-  // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+
 
   /*use mdns for host name resolution*/
   if (!MDNS.begin(host))  // http://ESP32OTA.local
