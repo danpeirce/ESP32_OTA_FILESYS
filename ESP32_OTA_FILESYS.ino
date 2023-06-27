@@ -11,11 +11,12 @@
  *  https://github.com/roberttidey/BaseSupport
  *
  *  Richard Palmer 2023 
+ *    Modified by Dan Peirce B.Sc. June 2023
  */
 
-#define LITTLE_FS 0
-#define SPIFFS_FS 1
-#define FILESYSTYPE SPIFFS_FS 
+//#define LITTLE_FS 0  // these three lines moved to filecode.h
+//#define SPIFFS_FS 1
+//#define FILESYSTYPE LITTLE_FS    // Set to on or the other before compile
 
 const char* host = "ESP32OTA";
 
@@ -31,9 +32,11 @@ const char* host = "ESP32OTA";
 #include <ESPmDNS.h>
 #include <Update.h>
 #include <WiFiServer.h>
+#include "filecode.h"
+#include "webpages.h"
 //#include <HTTPUpdateServer.h>
 
-//#define MYWIFI  // allow credentials to be stored in a file
+#define MYWIFI  // allow credentials to be stored in a file
 #ifdef MYWIFI
   #include "mywifi.h"
 #else
