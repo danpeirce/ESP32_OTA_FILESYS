@@ -29,6 +29,7 @@ const char* host = "ESP32OTA";
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
+#include <time.h> 
 #include <ESPmDNS.h>
 #include <Update.h>
 #include <WiFiServer.h>
@@ -39,6 +40,8 @@ const char* host = "ESP32OTA";
 
 WebServer server(80);
 bool fsFound = false;
+long timezone = -8;     // This timezone was set for Vancouver BC Canada (Same as L.A. USA)
+byte daysavetime = 1;   // Set in June for DST
 
 void setup(void) 
 {
@@ -73,6 +76,16 @@ void setup(void)
 
   fsFound = initFS(false, false); // is an FS already in place?
 
+  Serial.println("Contacting Time Server");
+  configTime(3600*timezone, daysavetime*3600, "time.nist.gov", "0.pool.ntp.org", "1.pool.ntp.org");
+  struct tm tmstruct ;
+  delay(2000);
+  tmstruct.tm_year = 0;
+  getLocalTime(&tmstruct, 5000);
+  Serial.printf("\nNow is : %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct.tm_year)+1900,( tmstruct.tm_mon)+1, tmstruct.tm_mday,tmstruct.tm_hour , tmstruct.tm_min, tmstruct.tm_sec);
+  Serial.println("");
+  static char starttime[32];
+  sprintf(starttime, "%d-%02d-%02d %02d:%02d:%02d\n",(tmstruct.tm_year)+1900,( tmstruct.tm_mon)+1, tmstruct.tm_mday,tmstruct.tm_hour , tmstruct.tm_min, tmstruct.tm_sec);
 
 
   /*use mdns for host name resolution*/
