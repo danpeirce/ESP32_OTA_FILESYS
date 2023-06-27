@@ -13,11 +13,15 @@ This program provides a web-based interface for
 
 It may be accessed via from a web browser by its IP address or via http://ESP32OTA.local
 
+The program sets the real time clock in the ESP32 using web provided NTP servers. A timestamp in the file system is updated every time a file is saved. This project does not currently display the timestamps but another project shows them in the serial monitor. See [https://github.com/danpeirce/esp32_time_logging](https://github.com/danpeirce/esp32_time_logging)
+
 ## Limitations:
 
 * It must be compiled for either the SPIFFS or LittleFS file system. 
 * It does not support LittleFS folder hierarchies.
 * ~~WiFi credentials must be compiled in.~~ in my fork I added WiFiManager to avoid compiling in credentials.
+* It does not display timestamps in the file listing although they are there. Currently can access timestamps with another project. See 
+  [https://github.com/danpeirce/esp32_time_logging](https://github.com/danpeirce/esp32_time_logging)
 * The code has only been tested in a Chrome and Firefox desktop browser on Windows. While it should function correctly in Mozilla-style browsers across 
   all desktop OS platforms, functionality on mobile and other desktop browsers is untested.
 * Assumes ESP32 v2.x (ESP32-IDF v4.x) for Arduino 1.8.x or Arduino 2.0.x 
@@ -28,6 +32,8 @@ It may be accessed via from a web browser by its IP address or via http://ESP32O
 ## To Do
 
 * Add VFS/FATFS support
+* display timestamps in file listing. The original version of this project did not set the boards RTC. This current version sets 
+  the clock via a NYP server. Now that the correct time is available it would be expedient to display the time a file was updated.
 
 ## How to Use This Code:
 
