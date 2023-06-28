@@ -300,6 +300,11 @@ void handleMain() {
 		output += " (";
     output += String(entry.size());
 		output += ")&nbsp;&nbsp;";
+    static char timestmp[30];
+    time_t t= entry.getLastWrite();
+    struct tm * tmstruct = localtime(&t);
+    sprintf(timestmp," %d-%02d-%02d %02d:%02d:%02d\n",(tmstruct->tm_year)+1900,( tmstruct->tm_mon)+1, tmstruct->tm_mday,tmstruct->tm_hour , tmstruct->tm_min, tmstruct->tm_sec);
+    output += String(timestmp);
     // edit
     output += "<a href=/main?mode=edit&nameSave="; 
     if(fileName[0] != '\\' && fileName[0] != '/') // avoid double \ or / in filename (on some OS)
