@@ -30,7 +30,7 @@ http://esp32ota.local/phys1600_parts.html#phys1600-parts-main-box
 
 http://esp32ota.local/md-viewer.html
 
-![](img/screenshot_md_viewer.png)
+![](img/screenshot_md-viewer.png)
 
 ## Limitations:
 
