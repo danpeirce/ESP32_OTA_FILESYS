@@ -10,14 +10,27 @@ This program provides a web-based interface for
 * File uploding
 * File editing
 * File deletion
-
-It may be accessed via from a web browser by its IP address or via http://ESP32OTA.local
+* Also, extensible as a result of the web server and local file system.
+    * OTA and File System Management may be accessed from a web browser by its IP address or via http://ESP32OTA.local
+    * Loaded files can be accessed from a web browser via http://ESP32OTA.local/*fileName*
+	    * The local file can be an html file (possibly having associated CSS files and javascript files)
+        * example see https://github.com/danpeirce/md-viewer#using-md-viewer		
 
 The program sets the real time clock in the ESP32 using web provided NTP servers. A timestamp in the file system is updated every time a file is saved. 
 
 ### Example Screenshot
 
+http://ESP32OTA.local
+
 ![](img/screenshot_w_timestamp.png)
+
+http://esp32ota.local/phys1600_parts.html#phys1600-parts-main-box
+
+![](img/screenshot_phys1600_parts.png)
+
+http://esp32ota.local/md-viewer.html
+
+![](img/screenshot_md_viewer.png)
 
 ## Limitations:
 
@@ -31,9 +44,6 @@ The program sets the real time clock in the ESP32 using web provided NTP servers
 * Tested on ESP32-DOWD (WROOM and WROVER) and ESP32-S3 (WROOM).
     * This fork tested on ESP32-S2 DEVKIT 
 
-## To Do
-
-* Add VFS/FATFS support
 
 ## How to Use This Code:
 
@@ -50,11 +60,4 @@ The program sets the real time clock in the ESP32 using web provided NTP servers
 * Access the http://ESP32OTA.local URL from your host machine.
 * Perform file functions (format, load, edit, delete) and upload other programs (OTA) on the ESP32
 
-## Reason for This Fork
 
-The original code is useful and working; however, I am not comfortable with variable and function definitions 
-being located n header files. The header files are now rewritten to contain function declarations and variable declarations. New \*.ino files 
-have been created to contain function definitions and variable definitions. The Arduino IDE concatenates the additional \*.ino files at the end of 
-the project \*.ino file as preprocessing before compiling.
-
-Decided to add WiFi Manager to avoid hard coding SSID credentials.
