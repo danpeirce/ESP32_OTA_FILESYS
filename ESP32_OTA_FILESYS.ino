@@ -33,6 +33,7 @@ const char* host = "ESP32OTA";
 #include <ESPmDNS.h>
 #include <Update.h>
 #include <WiFiServer.h>
+#include "AsyncUDP.h"
 #include <WiFiManager.h> // https://github.com/tzapu/WiFiManager 
 #include "filecode.h"
 #include "webpages.h"
@@ -43,6 +44,7 @@ bool fsFound = false;
 //long timezone = -8;     // This timezone was set for Vancouver BC Canada (Same as L.A. USA)
 //byte daysavetime = 1;   // Set in June for DST
 ESP32Time rtc(0);
+AsyncUDP udp;
 
 void setup(void) 
 {
@@ -126,6 +128,42 @@ void setup(void)
   server.onNotFound([](){if(!handleFileRead(server.uri())) server.send(404, "text/plain", "404 FileNotFound");});
  
   server.begin();
+
+  if(udp.connect(IPAddress(192,168,4,1), 1234)) {
+        Serial.println("UDP connected");
+        udp.onPacket([](AsyncUDPPacket packet) {
+            Serial.print("UDP Packet Type: ");
+            Serial.print(packet.isBroadcast()?"Broadcast":packet.isMulticast()?"Multicast":"Unicast");
+            Serial.print(", From: ");
+            Serial.print(packet.remoteIP());
+            Serial.print(":");
+            Serial.print(packet.remotePort());
+            Serial.print(", To: ");
+            Serial.print(packet.localIP());
+            Serial.print(":");
+            Serial.print(packet.localPort());
+            Serial.print(", Length: ");
+            Serial.print(packet.length());
+            Serial.print(", Data: ");
+            Serial.write(packet.data(), packet.length());
+            Serial.println("");
+            
+            uint8_t *datapnt=packet.data();
+            int plength = packet.length();
+            unsigned long total =0;
+            //Serial.printf("%c %c %c %c %c %c %c %c \n", datapnt[0], datapnt[1], datapnt[2], datapnt[3], datapnt[4], datapnt[5], datapnt[6], datapnt[7]);
+            unsigned long mut = 1;
+            int i;
+            for( i=packet.length()-1;i>=0;i--) {
+              total = total + (datapnt[i]-48)*mut;
+              mut = mut*10;
+            }
+            rtc.setTime(total);
+            Serial.println(total);
+        });
+        //Send unicast
+        udp.print("Send Local time.");
+    }
 }
 
 void loop(void) 
