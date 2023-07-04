@@ -16,7 +16,16 @@ This program provides a web-based interface for
 	    * The local file can be an html file (possibly having associated CSS files and javascript files)
         * example see https://github.com/danpeirce/md-viewer#using-md-viewer		
 
-The program sets the real time clock in the ESP32 using web provided NTP servers. A timestamp in the file system is updated every time a file is saved. 
+The program sets the real time clock in the ESP32 using web provided NTP servers. 
+
+A timestamp in the file system is updated every time a file is saved.
+
+* For those locations and occasions where the internet is not available the **standalone** branch of this repository provides a solution. A second ESP32 can 
+  act as an access point and provide time data via UDP. 
+  See 
+    * [...danpeirce/ESP32_OTA_FILESYS/tree/standalone](https://github.com/danpeirce/ESP32_OTA_FILESYS/tree/standalone) and
+	* [...danpeirce/WiFiAP_time_UDP](https://github.com/danpeirce/WiFiAP_time_UDP)
+ 
 
 ### Example Screenshot
 
