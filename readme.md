@@ -2,7 +2,7 @@
 
 The Arduino V2.0 IDE does not yet include the 'Sketch Data Upload' plugin.
 
-This program provides a web-based interface for
+This program provides a WiFi HTTP interface for
 
 * OTA
 * File system formatting
@@ -16,7 +16,16 @@ This program provides a web-based interface for
 	    * The local file can be an html file (possibly having associated CSS files and javascript files)
         * example see https://github.com/danpeirce/md-viewer#using-md-viewer		
 
-The program sets the real time clock in the ESP32 using web provided NTP servers. A timestamp in the file system is updated every time a file is saved. 
+The program sets the real time clock in the ESP32 using UDP interaction with another ESP32. A timestamp in the file system is updated every time a file is saved. 
+
+#### How this Branch Differs from the Main Branch
+
+The most significant difference between this branch and the main branch is this branch assumes internet access is not available. The main branch is dependant on 
+access to a NTP server for setting the built in RTC. This branch uses a second ESP32 which response to an UDP packet by responding with a UDP packet which contains
+time information. 
+
+A sketch is available at [https://github.com/danpeirce/WiFiAP_time_UDP](https://github.com/danpeirce/WiFiAP_time_UDP) for the other ESP that serves the UDP
+time data packet.
 
 ### Example Screenshot
 
@@ -40,13 +49,14 @@ http://esp32ota.local/md-viewer.html
 * The code has only been tested in a Chrome and Firefox desktop browser on Windows. While it should function correctly in Mozilla-style browsers across 
   all desktop OS platforms, functionality on mobile and other desktop browsers is untested.
 * Assumes ESP32 v2.x (ESP32-IDF v4.x) for Arduino 1.8.x or Arduino 2.0.x 
-* ~~It does not require additional libraries to be installed.~~ This fork requires the [WiFiManager](https://github.com/tzapu/WiFiManager) library.
-* Tested on ESP32-DOWD (WROOM and WROVER) and ESP32-S3 (WROOM).
-    * This fork tested on ESP32-S2 DEVKIT 
+* ~~It does not require additional libraries to be installed.~~ This branch of this fork requires the [ESP32Time](https://github.com/fbiego/ESP32Time) library.
+* This fork tested on ESP32-S2 DEVKIT 
 
 
 ## How to Use This Code:
 
+* A second ESP32 running the [https://github.com/danpeirce/WiFiAP_time_UDP](https://github.com/danpeirce/WiFiAP_time_UDP) sketch should be 
+  powered and have its RTC set before powering this sketch. This sketch is dependent on the other for an access point and time data.
 * Select a board partition scheme that allows SPIFFS (and OTA if you require it). Either the first option or fourth from the bottom are known to 
   work. Third from the top and fifth from the bottom (large FS) should work on ESP32's with sufficient resources, but haven't been tested.
 
@@ -59,5 +69,13 @@ http://esp32ota.local/md-viewer.html
 	* ESP will then reconfigure itself to connect to router SSID
 * Access the http://ESP32OTA.local URL from your host machine.
 * Perform file functions (format, load, edit, delete) and upload other programs (OTA) on the ESP32
+* It is not necessary to be attached to a computer after the program is uploaded. If the USB is connected and serial monitor is on
+  the serial output should look something like the image below: 
+  
+  ![](img/UDP_time_data.png)
+  
+### UDP Sequence
 
-
+1. The access point ESP32 is powered up and RTC adjusted. A computer wifi is pointed at the access point and a web browser is used to adjust the RTC. 
+2. The OTA / LittleFS ESP32 is powered up. On power up this ESP32 automatically sends a UDP message to the AP/UDP server ESP32.
+3. The server responds with  UDP packet containing a local time data.
