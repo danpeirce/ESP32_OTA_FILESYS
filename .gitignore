@@ -1,0 +1,5 @@
+*.elf
+*.ino.map
+*.partitions.bin
+*.bootloader.bin
+
