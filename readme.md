@@ -79,3 +79,14 @@ http://esp32ota.local/md-viewer.html
 1. The access point ESP32 is powered up and RTC adjusted. A computer wifi is pointed at the access point and a web browser is used to adjust the RTC. 
 2. The OTA / LittleFS ESP32 is powered up. On power up this ESP32 automatically sends a UDP message to the AP/UDP server ESP32.
 3. The server responds with  UDP packet containing a local time data.
+
+## Updated to Use WiFi Favicon
+
+The favicon used in the *head* section of the HTML was replaced to a wifi icon which seemed more fitting for this project.
+
+The new icon can be seen on the tab in the upper right. This replaces the monkey face icon that had been there.
+
+![](img/favicon-wifi.png)
+
+The same technique was used as in the original project. The base64 code was replaced at the end of **webpages.ico**. To convert a favicon.ico file to 
+the [base64 encoding example code from a stackoverflow answer](https://stackoverflow.com/questions/6150289/how-can-i-convert-an-image-into-base64-string-using-javascript#56180766) was used.
