@@ -232,7 +232,7 @@ void handleMain() {
 
   // Create HTML page
   output = "<html><head>";
-  output += penguinIco;
+  output += wifiIco;
   output += "</head><body onload='scrollToBottom(\"log\")'>\n";
   output += "<span style='text-align: center;'><h2>ESP32 OTA and File Management</H2></span>";
   output += "<table style='margin-left: auto;  margin-right: auto;border-collapse: collapse'>\n"; // style='border: 1px solid silver; border-collapse: collapse;'
