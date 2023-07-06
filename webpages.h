@@ -5,6 +5,6 @@
 extern const char* otaHTML;
 
 // penguin favicon.ico
-extern const char* penguinIco;
+extern const char* wifiIco;
 
 #endif

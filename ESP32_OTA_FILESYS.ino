@@ -18,7 +18,7 @@
 //#define SPIFFS_FS 1
 //#define FILESYSTYPE LITTLE_FS    // Set to on or the other before compile
 
-const char* host = "ESP32OTA";
+const char* host = "esp32ota";
 
 #define FILEBUFSIZ 4096
 
