@@ -79,3 +79,11 @@ The new icon can be seen on the tab in the upper right. This replaces the monkey
 
 The same technique was used as in the original project. The base64 code was replaced at the end of **webpages.ico**. To convert a favicon.ico file to 
 the [base64 encoding example code from a stackoverflow answer](https://stackoverflow.com/questions/6150289/how-can-i-convert-an-image-into-base64-string-using-javascript#56180766) was used.
+
+## Android did not Support mDNS on Older Devices
+
+Android did not support mDNS on older devices (this includes my old phone). Windows computers and apple devices do support mDNS and I am reading newer Adrodid devices also now support it. On most devices http://ESP32OTA.local in the 
+location bar of the browser will work. Not on old Android devices. On android my phone from 2013 I must enter the IP address. At home I set my router
+to have a IP reservation for the ESP32 so that the IP address is consistent and known.
+
+Update here https://www.androidpolice.com/android-mdns-local-hostname/
