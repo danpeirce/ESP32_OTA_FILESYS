@@ -87,3 +87,8 @@ location bar of the browser will work. Not on old Android devices. On android my
 to have a IP reservation for the ESP32 so that the IP address is consistent and known.
 
 Update here https://www.androidpolice.com/android-mdns-local-hostname/
+
+## GNU GENERAL PUBLIC LICENSE Version 2
+
+Substantial portions of the code in this project is derived directly from examples in https://github.com/espressif/arduino-esp32 . That repository is licensed under 
+the LGPL v2.1 for code libraries. Being primarily a remix of example code it seems fitting that this project should be subject to the GPL.
