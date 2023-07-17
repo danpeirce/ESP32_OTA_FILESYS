@@ -25,7 +25,10 @@ A timestamp in the file system is updated every time a file is saved.
   See 
     * [...danpeirce/ESP32_OTA_FILESYS/tree/standalone](https://github.com/danpeirce/ESP32_OTA_FILESYS/tree/standalone) and
 	* [...danpeirce/WiFiAP_time_UDP](https://github.com/danpeirce/WiFiAP_time_UDP)
- 
+* If the internet is available only by wired Ethernet a Mobile WiFi hotspot can be created.
+    * See [Mobile Hotspot](MobileHotspot.md)
+	* WiFi can be added to desktops with an inexpensive dongle such as [tl-wn725n](https://www.tp-link.com/ca/home-networking/adapter/tl-wn725n/)
+	    * On [Amazon.ca](https://www.amazon.ca/TP-Link-TL-WN725N-Wireless-Adapter-Miniature/dp/B008IFXQFU/ref=sr_1_11?keywords=wifi%2Bdongle&qid=1689573271&sr=8-11&th=1)
 
 ### Example Screenshot
 
